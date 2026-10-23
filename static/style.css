@@ -1,0 +1,388 @@
+/* GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fc;
+    color: #172b4d;
+    min-height: 100vh;
+}
+
+/* TOP NAVIGATION */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 6%;
+    background: white;
+    border-bottom: 1px solid #e5eaf3;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: #174a8b;
+    color: white;
+    border-radius: 12px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand h2 {
+    font-size: 22px;
+    color: #174a8b;
+}
+
+.brand p {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.nav-register {
+    text-decoration: none;
+    color: #174a8b;
+    border: 1px solid #174a8b;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* COLLEGE HEADER */
+.college-header {
+    text-align: center;
+    padding: 28px 15px 15px;
+}
+
+.college-header h3 {
+    color: #174a8b;
+    font-size: 21px;
+    margin-bottom: 9px;
+}
+
+.college-header p {
+    color: #64748b;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+/* MAIN LAYOUT */
+.main-section {
+    width: 88%;
+    max-width: 1200px;
+    margin: 20px auto 35px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 55px;
+    align-items: center;
+}
+
+/* WELCOME SECTION */
+.welcome-section {
+    padding: 25px 0;
+}
+
+.tag {
+    display: inline-block;
+    background: #e0ebff;
+    color: #174a8b;
+    padding: 9px 13px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.welcome-section h1 {
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 1.25;
+    margin: 23px 0 18px;
+    color: #102d59;
+}
+
+.welcome-section h1 span {
+    color: #2878d0;
+}
+
+.welcome-text {
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+/* FEATURE CARDS */
+.feature-list {
+    display: grid;
+    gap: 13px;
+    margin-top: 28px;
+}
+
+.feature-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #e5eaf3;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(23, 74, 139, 0.08);
+}
+
+.feature-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    background: #edf4ff;
+    border-radius: 10px;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.feature-card h3 {
+    font-size: 15px;
+    color: #174a8b;
+    margin-bottom: 5px;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* LOGIN CARD */
+.login-container {
+    width: 100%;
+    max-width: 440px;
+    justify-self: end;
+    padding: 35px;
+    background: white;
+    border: 1px solid #e5eaf3;
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(25, 55, 100, 0.09);
+}
+
+.login-heading {
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+.login-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    background: #e8f1ff;
+    color: #174a8b;
+    border-radius: 14px;
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.login-heading h2 {
+    font-size: 26px;
+    color: #17365f;
+    margin-bottom: 9px;
+}
+
+.login-heading p {
+    color: #8291a8;
+    font-size: 13px;
+}
+
+/* FORM */
+.login-container label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #334b6d;
+    margin: 17px 0 8px;
+}
+
+.login-container input,
+.login-container select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d6dfec;
+    border-radius: 7px;
+    background: white;
+    color: #243b5b;
+    font-size: 14px;
+    outline: none;
+}
+
+.login-container input:focus,
+.login-container select:focus {
+    border-color: #2878d0;
+    box-shadow: 0 0 0 3px rgba(40, 120, 208, 0.10);
+}
+
+/* LOGIN BUTTON */
+.login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background: #174a8b;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    background: #103767;
+    transform: translateY(-1px);
+}
+
+/* REGISTER LINK */
+.register-section {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+}
+
+.register-section p {
+    display: inline;
+    color: #8291a8;
+}
+
+.register-section a {
+    color: #174a8b;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+/* SECURITY NOTE */
+.secure-note {
+    text-align: center;
+    border-top: 1px solid #edf0f5;
+    margin-top: 25px;
+    padding-top: 18px;
+    color: #8291a8;
+    font-size: 12px;
+}
+
+/* FLASH MESSAGES */
+.message {
+    padding: 11px;
+    border-radius: 7px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.message.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 20px 12px;
+    color: #8291a8;
+    font-size: 11px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 850px) {
+    .main-section {
+        grid-template-columns: 1fr;
+        width: 90%;
+        gap: 25px;
+    }
+
+    .login-container {
+        justify-self: center;
+        max-width: 500px;
+    }
+
+    .welcome-section h1 {
+        font-size: 34px;
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .brand h2 {
+        font-size: 18px;
+    }
+
+    .brand p {
+        font-size: 10px;
+    }
+
+    .brand-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .nav-register {
+        padding: 9px;
+        font-size: 11px;
+    }
+
+    .college-header {
+        padding-top: 24px;
+    }
+
+    .college-header h3 {
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    .college-header p {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .main-section {
+        margin-top: 10px;
+    }
+
+    .welcome-section h1 {
+        font-size: 30px;
+    }
+
+    .welcome-text {
+        font-size: 13px;
+    }
+
+    .login-container {
+        padding: 24px 20px;
+    }
+}

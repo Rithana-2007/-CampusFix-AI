@@ -1,0 +1,171 @@
+/* GENERAL SETTINGS */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+font-family: Arial, sans-serif;
+background: #ffffff;
+color: #174a8b;
+min-height: 100vh;
+padding: 25px;
+}
+
+/* CAMPUSFIX-AI: TOP LEFT */
+.site-brand {
+position: absolute;
+top: 20px;
+left: 25px;
+}
+
+.site-brand h2 {
+font-size: 25px;
+color: #174a8b;
+margin-bottom: 5px;
+}
+
+.site-brand p {
+font-size: 13px;
+color: #174a8b;
+}
+
+/* COLLEGE NAME: TOP CENTRE */
+.college-section {
+text-align: center;
+padding: 100px 10px 20px;
+}
+
+.college-section h1 {
+font-size: 25px;
+color: #174a8b;
+margin-bottom: 12px;
+}
+
+.college-section p {
+font-size: 14px;
+color: #174a8b;
+margin: 7px 0;
+}
+
+/* LOGIN BOX: CENTRE */
+.login-container {
+width: 100%;
+max-width: 400px;
+margin: 15px auto 30px;
+padding: 30px;
+background: #ffffff;
+border: 1px solid #d5e1f0;
+border-radius: 12px;
+box-shadow: 0 4px 15px rgba(23, 74, 139, 0.10);
+}
+
+.login-container h2 {
+text-align: center;
+color: #174a8b;
+margin-bottom: 20px;
+}
+
+/* FORM LABELS */
+.login-container label {
+display: block;
+font-weight: bold;
+color: #174a8b;
+margin: 16px 0 7px;
+}
+
+/* INPUTS AND DROPDOWN */
+.login-container input,
+.login-container select {
+display: block;
+width: 100%;
+padding: 12px;
+border: 1px solid #b8cce5;
+border-radius: 6px;
+background: #ffffff;
+color: #174a8b;
+font-size: 15px;
+}
+
+/* LOGIN BUTTON */
+.login-container button {
+width: 100%;
+padding: 13px;
+margin-top: 22px;
+background: #174a8b;
+color: #ffffff;
+border: none;
+border-radius: 6px;
+font-size: 16px;
+cursor: pointer;
+}
+
+.login-container button:hover {
+background: #0d3568;
+}
+
+/* REGISTER LINK */
+.register {
+text-align: center;
+margin-top: 20px;
+}
+
+.login-container a {
+color: #174a8b;
+}
+
+/* SUCCESS AND ERROR MESSAGES */
+.success,
+.error {
+padding: 11px;
+border-radius: 7px;
+margin-bottom: 12px;
+}
+
+.success {
+background: #dcfce7;
+color: #166534;
+}
+
+.error {
+background: #fee2e2;
+color: #991b1b;
+}
+
+/* MOBILE RESPONSIVE DESIGN */
+@media (max-width: 600px) {
+
+body {
+    padding: 15px;
+}
+
+.site-brand {
+    position: static;
+    text-align: left;
+}
+
+.site-brand h2 {
+    font-size: 22px;
+}
+
+.college-section {
+    padding: 35px 5px 20px;
+}
+
+.college-section h1 {
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+.college-section p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.login-container {
+    padding: 22px;
+}
+
+}

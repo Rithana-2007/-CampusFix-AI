@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | CampusFix-AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #123b69;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h2 { margin: 0; }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border-left: 5px solid #2563eb;
+            box-shadow: 0 3px 12px #00000008;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            color: #64748b;
+            margin-top: 0;
+        }
+
+        .card p {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button.secondary { background: #0f766e; }
+
+        .table-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th { background: #eff6ff; }
+
+        .status {
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #fef3c7;
+            font-size: 12px;
+        }
+
+        .success {
+            padding: 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .error {
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>CampusFix-AI</h2>
+
+    <nav>
+        <a href="{{ url_for('student_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('new_complaint') }}">Report Fault</a>
+        <a href="{{ url_for('track') }}">Track Complaint</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="{{ 'error' if category == 'error' else 'success' }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="welcome">
+        <h1>Welcome, {{ session.get('name', 'Student') }}!</h1>
+        <p>Report campus infrastructure problems and monitor repair progress.</p>
+    </section>
+
+    <h2>Maintenance Overview</h2>
+
+    <section class="cards">
+        <div class="card">
+            <h3>Total Complaints</h3>
+            <p>{{ total_complaints }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <p>{{ pending_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>In Progress</h3>
+            <p>{{ in_progress_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Resolved</h3>
+            <p>{{ resolved_count }}</p>
+        </div>
+    </section>
+
+    <section class="actions">
+        <a class="button" href="{{ url_for('new_complaint') }}">
+            + Report a Fault
+        </a>
+
+        <a class="button secondary" href="{{ url_for('track') }}">
+            Track Complaint
+        </a>
+    </section>
+
+    <section class="table-box">
+        <h2>My Complaint History</h2>
+
+        {% if complaints %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Complaint ID</th>
+                    <th>Location</th>
+                    <th>Fault Type</th>
+                    <th>Department</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint['Complaint ID'] }}</td>
+                    <td>{{ complaint['Location'] }}</td>
+                    <td>{{ complaint['Fault Type'] }}</td>
+                    <td>{{ complaint['Department'] }}</td>
+                    <td>{{ complaint['Priority'] }}</td>
+                    <td>
+                        <span class="status">
+                            {{ complaint['Status'] }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+            <p>You have not submitted any complaints yet.</p>
+            <p>Use the Report a Fault button to submit your first complaint.</p>
+        {% endif %}
+    </section>
+
+</main>
+
+<footer>
+    CampusFix-AI | Smart Campus Infrastructure Management
+</footer>
+
+</body>
+</html>

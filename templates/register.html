@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration | CampusFix-AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .register-box {
+            max-width: 420px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .register-box h2 {
+            text-align: center;
+            color: #174ea6;
+        }
+
+        .register-box label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .register-box input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .register-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 22px;
+            background: #174ea6;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .register-box button:hover {
+            background: #103778;
+        }
+
+        .register-box p {
+            text-align: center;
+        }
+
+        .register-box a {
+            color: #174ea6;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h2>🎓 Student Registration</h2>
+    <p>Create your CampusFix-AI account</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form action="{{ url_for('register') }}" method="POST">
+
+        <label for="name">Student Name</label>
+        <input type="text"
+               id="name"
+               name="name"
+               required
+               maxlength="100">
+
+        <label for="email">Email / Login ID</label>
+        <input type="email"
+               id="email"
+               name="email"
+               required
+               maxlength="254">
+
+        <label for="password">Password</label>
+        <input type="password"
+               id="password"
+               name="password"
+               required
+               minlength="8"
+               autocomplete="new-password">
+
+        <button type="submit">Create Account</button>
+
+    </form>
+
+    <p>Already registered?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+
+</div>
+
+</body>
+</html>

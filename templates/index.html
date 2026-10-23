@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Fault | CampusFix-AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #123b69;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h2 { margin: 0; }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px #0000000c;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 18px 0 7px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .button {
+            margin-top: 22px;
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button:hover { background: #1d4ed8; }
+
+        .success {
+            padding: 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 7px;
+        }
+
+        .error {
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 7px;
+        }
+
+        .note {
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>CampusFix-AI</h2>
+    <a href="{{ url_for('student_dashboard') }}">← Back to Dashboard</a>
+</header>
+
+<main class="container">
+
+    <div class="form-box">
+        <h1>Report Campus Fault</h1>
+        <p>Describe the infrastructure problem so the maintenance team can address it.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="{{ 'error' if category == 'error' else 'success' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form action="{{ url_for('report') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <label for="location">Fault Location *</label>
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="e.g. Block A, First Floor, Room 102"
+                required>
+
+            <label for="fault_type">Fault Type *</label>
+            <select id="fault_type" name="fault_type" required>
+                <option value="">Select fault type</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Plumbing">Plumbing / Water Leakage</option>
+                <option value="Civil">Building / Wall / Floor Damage</option>
+                <option value="Furniture">Furniture Damage</option>
+                <option value="Sanitation">Sanitation / Drainage</option>
+                <option value="IT">Internet / Computer / Network</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="description">Fault Description *</label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Explain the problem clearly..."
+                required></textarea>
+
+            <label for="photo">Upload Photo (Optional)</label>
+            <input
+                type="file"
+                id="photo"
+                name="photo"
+                accept=".jpg,.jpeg,.png,.gif,.webp,image/*">
+
+            <p class="note">
+                Supported formats: JPG, JPEG, PNG, GIF, WEBP.
+            </p>
+
+            <button type="submit" class="button">
+                Submit Complaint
+            </button>
+
+        </form>
+    </div>
+
+</main>
+
+</body>
+</html>

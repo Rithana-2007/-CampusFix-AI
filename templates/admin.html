@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | CampusFix-AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #123b69;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h2 { margin: 0; }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border-left: 5px solid #2563eb;
+        }
+
+        .card h3 {
+            color: #64748b;
+            font-size: 15px;
+            margin-top: 0;
+        }
+
+        .card p {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1250px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        th { background: #eff6ff; }
+
+        td.description {
+            max-width: 250px;
+            overflow-wrap: anywhere;
+        }
+
+        td img {
+            width: 90px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 9px 12px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background: #2563eb;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        button:hover { background: #1d4ed8; }
+
+        .success, .error {
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty { padding: 25px; }
+
+        .priority-high {
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .priority-medium {
+            color: #b45309;
+            font-weight: bold;
+        }
+
+        .priority-low {
+            color: #15803d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>CampusFix-AI | Admin</h2>
+
+    <nav>
+        <a href="{{ url_for('admin') }}">Dashboard</a>
+        &nbsp;&nbsp; | &nbsp;&nbsp;
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="{{ 'error' if category == 'error' else 'success' }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="welcome">
+        <h1>Maintenance Overview</h1>
+        <p>Monitor campus faults, assign repair progress, and review student reports.</p>
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+            <h3>Total Complaints</h3>
+            <p>{{ total_complaints }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <p>{{ pending_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>In Progress</h3>
+            <p>{{ in_progress_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Resolved</h3>
+            <p>{{ resolved_count }}</p>
+        </div>
+
+    </section>
+
+    <section class="table-box">
+
+        <h2>All Campus Complaints</h2>
+
+        {% if complaints %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Complaint ID</th>
+                    <th>Student</th>
+                    <th>Email</th>
+                    <th>Location</th>
+                    <th>Fault Type</th>
+                    <th>Description</th>
+                    <th>Department</th>
+                    <th>Priority</th>
+                    <th>Photo</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint['Complaint ID'] }}</td>
+                    <td>{{ complaint['Student Name'] }}</td>
+                    <td>{{ complaint['Student Email'] }}</td>
+                    <td>{{ complaint['Location'] }}</td>
+                    <td>{{ complaint['Fault Type'] }}</td>
+
+                    <td class="description">
+                        {{ complaint['Description'] }}
+                    </td>
+
+                    <td>{{ complaint['Department'] }}</td>
+
+                    <td>
+                        <span class="priority-{{ complaint['Priority']|lower }}">
+                            {{ complaint['Priority'] }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {% if complaint['Photo'] %}
+                            <a
+                                href="{{ url_for('static', filename='uploads/' ~ complaint['Photo']) }}"
+                                target="_blank"
+                                rel="noopener noreferrer">
+
+                                <img
+                                    src="{{ url_for('static', filename='uploads/' ~ complaint['Photo']) }}"
+                                    alt="Complaint photo">
+                            </a>
+                        {% else %}
+                            No photo
+                        {% endif %}
+                    </td>
+
+                    <td>{{ complaint['Status'] }}</td>
+
+                    <td>
+                        <form action="{{ url_for('update_status') }}"
+                              method="POST">
+
+                            <input
+                                type="hidden"
+                                name="complaint_id"
+                                value="{{ complaint['Complaint ID'] }}">
+
+                            <select name="status" required>
+                                <option value="Pending"
+                                    {% if complaint['Status'] == 'Pending' %}selected{% endif %}>
+                                    Pending
+                                </option>
+
+                                <option value="In Progress"
+                                    {% if complaint['Status'] == 'In Progress' %}selected{% endif %}>
+                                    In Progress
+                                </option>
+
+                                <option value="Resolved"
+                                    {% if complaint['Status'] == 'Resolved' %}selected{% endif %}>
+                                    Resolved
+                                </option>
+                            </select>
+
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+            <div class="empty">
+                <h3>No complaints have been submitted yet.</h3>
+                <p>Student complaints will appear here after submission.</p>
+            </div>
+        {% endif %}
+
+    </section>
+
+</main>
+
+</body>
+</html>
